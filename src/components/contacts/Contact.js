@@ -10,10 +10,21 @@ class Contact extends Component {
   onShowClick = e => {
     this.setState({ showContactInfo: !this.state.showContactInfo });
   };
-  onDeleteClick = (id, dispatch) => {
-    axios
-      .delete(`http://jsonplaceholder.typicode.com/users/${id}`)
-      .then(res => dispatch({ type: 'DELETE_CONTACT', payload: id }));
+
+  // onDeleteClick = (id, dispatch) => {
+  //   axios
+  //     .delete(`http://jsonplaceholder.typicode.com/users/${id}`)
+  //     .then(res => dispatch({ type: 'DELETE_CONTACT', payload: id }));
+  // };
+
+  // Try/Catch is here only to simulate Delete, in real app no need for that
+  onDeleteClick = async (id, dispatch) => {
+    try {
+      await axios.delete(`http://jsonplaceholder.typicode.com/users/${id}`);
+      dispatch({ type: 'DELETE_CONTACT', payload: id });
+    } catch (e) {
+      dispatch({ type: 'DELETE_CONTACT', payload: id });
+    }
   };
   render() {
     const { id, name, email, phone } = this.props.contact;
